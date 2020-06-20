@@ -1,0 +1,7 @@
+resources:
+  - ../../global/crd/hardware-classification
+  - manager
+  - rbac
+  - webhook
+
+namespace: hardware-classification

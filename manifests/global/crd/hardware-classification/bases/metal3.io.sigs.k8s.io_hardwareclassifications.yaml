@@ -1,0 +1,145 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.4
+  creationTimestamp: null
+  name: hardwareclassifications.metal3.io.sigs.k8s.io
+spec:
+  additionalPrinterColumns:
+  - JSONPath: .status.profileMatchStatus
+    description: Profile Match Status
+    name: ProfileMatchStatus
+    type: string
+  - JSONPath: .status.errorMessage
+    description: Most recent error
+    name: Error
+    type: string
+  group: metal3.io.sigs.k8s.io
+  names:
+    kind: HardwareClassification
+    listKind: HardwareClassificationList
+    plural: hardwareclassifications
+    singular: hardwareclassification
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: HardwareClassification is the Schema for the hardwareclassifications
+        API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: HardwareClassificationSpec defines the desired state of HardwareClassification
+          properties:
+            expectedValidationConfiguration:
+              description: ExpectedHardwareConfiguration defines expected hardware
+                configurations for CPU, RAM, Disk, NIC.
+              properties:
+                CPU:
+                  description: CPU contains CPU details extracted from the hardware
+                    profile
+                  properties:
+                    maximumCount:
+                      minimum: 1
+                      type: integer
+                    maximumSpeed:
+                      pattern: ^(0\.\d*[1-9]\d*|[1-9]\d*(\.\d+)?)$
+                      type: string
+                    minimumCount:
+                      minimum: 1
+                      type: integer
+                    minimumSpeed:
+                      pattern: ^(0\.\d*[1-9]\d*|[1-9]\d*(\.\d+)?)$
+                      type: string
+                  type: object
+                Disk:
+                  description: Disk contains disk details extracted from the hardware
+                    profile
+                  properties:
+                    maximumCount:
+                      minimum: 1
+                      type: integer
+                    maximumIndividualSizeGB:
+                      format: int64
+                      minimum: 1
+                      type: integer
+                    minimumCount:
+                      minimum: 1
+                      type: integer
+                    minimumIndividualSizeGB:
+                      format: int64
+                      minimum: 1
+                      type: integer
+                  type: object
+                NIC:
+                  description: NIC contains nic details extracted from the hardware
+                    profile
+                  properties:
+                    maximumCount:
+                      minimum: 1
+                      type: integer
+                    minimumCount:
+                      minimum: 1
+                      type: integer
+                  type: object
+                RAM:
+                  description: RAM contains ram details extracted from the hardware
+                    profile
+                  properties:
+                    maximumSizeGB:
+                      minimum: 1
+                      type: integer
+                    minimumSizeGB:
+                      minimum: 1
+                      type: integer
+                  type: object
+              type: object
+          required:
+          - expectedValidationConfiguration
+          type: object
+        status:
+          description: HardwareClassificationStatus defines the observed state of
+            HardwareClassification
+          properties:
+            errorMessage:
+              description: The last error message reported by the hardwareclassification
+                system
+              type: string
+            errorType:
+              description: ErrorType indicates the type of failure encountered
+              type: string
+            profileMatchStatus:
+              description: ProfileMatchStatus identifies whether a applied profile
+                is matches or not
+              type: string
+          required:
+          - errorMessage
+          - profileMatchStatus
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

@@ -6,5 +6,6 @@ resources:
   - ../../function/capi
   - ../../function/cabpk
   - ../../function/cacpk
+  - ../../function/hwcc
 commonLabels:
   airshipit.org/stage: initinfra
