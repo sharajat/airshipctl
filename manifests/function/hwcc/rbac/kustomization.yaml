@@ -1,0 +1,5 @@
+resources:
+  - hcc-manager-role.yaml
+  - hcc-manager-rolebinding.yaml
+  - hcc-leader-election-role.yaml
+  - hcc-leader-election-rolebinding.yaml

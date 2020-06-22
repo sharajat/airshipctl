@@ -1,0 +1,7 @@
+resources:
+  - ../../global/crd/hardware-classification
+  - hcc-manager.yaml
+  - rbac
+  - service.yaml
+
+namespace: hardware-classification
