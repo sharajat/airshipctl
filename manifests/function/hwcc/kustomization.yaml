@@ -1,5 +1,5 @@
 resources:
-  - ../../global/crd/hardware-classification
+  - crd
   - hcc-manager.yaml
   - rbac
   - service.yaml
