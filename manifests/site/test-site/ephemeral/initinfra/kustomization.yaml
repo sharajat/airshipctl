@@ -3,6 +3,7 @@ resources:
   - ../../../../function/clusterctl
   - ../../../../function/airshipctl-catalogues
   - ../../../../function/baremetal-operator
+  - ../../../../function/hwcc
 
 patchesStrategicMerge:
   - patch_bmo_config.yaml

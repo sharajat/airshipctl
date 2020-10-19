@@ -25,6 +25,28 @@ sudo virsh destroy air-ephemeral
 echo "Deploy worker node"
 airshipctl phase run  workers-target --debug
 
+echo "Waiting for bmh to be ready"
+end=$(($(date +%s) + $TIMEOUT))
+echo "Waiting $TIMEOUT seconds for node to be in ready state."
+while true; do
+    if (kubectl --request-timeout 20s --kubeconfig $KUBECONFIG --context $KUBECONFIG_TARGET_CONTEXT get bmh node03 | grep -qw ready) ; then
+        echo -e "\nGet node status"
+        kubectl --kubeconfig $KUBECONFIG --context $KUBECONFIG_TARGET_CONTEXT get bmh
+        break
+    else
+        now=$(date +%s)
+        if [ $now -gt $end ]; then
+            echo -e "\nBMH node is not ready before TIMEOUT."
+            exit 1
+        fi
+        echo -n .
+        sleep 15
+    fi
+done
+
+echo "Classify and provision worker node"
+airshipctl phase run  workers-classification --debug
+
 #Wait till node is created
 end=$(($(date +%s) + $TIMEOUT))
 echo "Waiting $TIMEOUT seconds for node to be provisioned."

@@ -23,6 +23,9 @@ airshipctl phase run initinfra-ephemeral --debug
 echo "Getting metal3 pods as debug information"
 kubectl --kubeconfig $KUBECONFIG --context $KUBECONFIG_EPHEMERAL_CONTEXT --namespace metal3 get pods
 
+echo "Getting hardware classification controller pods as debug information"
+kubectl --kubeconfig $KUBECONFIG --context $KUBECONFIG_EPHEMERAL_CONTEXT --namespace hardware-classification get pods
+
 echo "Deploy cluster-api components to ephemeral node"
 airshipctl phase run clusterctl-init-ephemeral --debug
 
